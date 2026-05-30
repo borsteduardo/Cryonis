@@ -44,6 +44,14 @@ class FichaController extends Controller
         return view('fichas.create', compact('categorias'));
     }
 
+    public function destroy($id)
+{
+    $ficha = \App\Models\Ficha::findOrFail($id);
+    $ficha->delete();
+
+    return redirect()->route('fichas.index')->with('sucesso', 'Carta excluída com sucesso!');
+}
+
     // Salva a carta no banco de dados
     public function store(Request $request)
     {

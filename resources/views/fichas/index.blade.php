@@ -82,6 +82,13 @@
                 </div>
             @endif
             
+
+            @if (session('erro'))
+    <div class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative mb-4 shadow-sm">
+        {{ session('erro') }}
+    </div>
+@endif
+
             <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg mb-6">
                 <div class="p-6">
                     <form method="GET" action="{{ route('fichas.index') }}" class="grid grid-cols-1 md:grid-cols-5 gap-4 items-end">
@@ -159,20 +166,34 @@
                             </div>
                         </div>
 
-                        <div class="bg-gray-100 p-4 border-t border-gray-200 flex justify-between items-center">
-                            <div>
-                                <span class="text-xs text-gray-500 uppercase font-bold block">{{ $ficha->categoria->nome ?? 'Sem Pasta' }}</span>
-                                <span class="font-black text-emerald-600 text-lg">{{ number_format($ficha->preco, 0, ',', '.') }} C</span>
-                            </div>
-                            
-                            <form action="{{ route('loja.solicitar', $ficha->id) }}" method="POST">
-                                @csrf
-                                <button type="submit" class="bg-indigo-600 hover:bg-indigo-700 text-white font-bold py-2 px-4 rounded shadow-sm text-sm transition duration-150 ease-in-out">
-                                    Solicitar Compra
-                                </button>
-                            </form>
-                        </div>
+                        <div class="bg-gray-100 p-4 border-t border-gray-200 flex flex-col gap-2">
+    <div class="flex justify-between items-center mb-2">
+        <span class="text-xs text-gray-500 uppercase font-bold">{{ $ficha->categoria->nome ?? 'Sem Pasta' }}</span>
+        <span class="font-black text-emerald-600 text-lg">{{ number_format($ficha->preco, 0, ',', '.') }} C</span>
+    </div>
+
+    <div class="flex flex-col gap-2">
+        <form action="{{ route('loja.solicitar', $ficha->id) }}" method="POST" class="w-full">
+            @csrf
+            <button type="submit" class="w-full bg-indigo-600 hover:bg-indigo-700 text-white font-bold py-2 px-4 rounded shadow-sm text-sm transition duration-150 ease-in-out">
+                Solicitar Compra
+            </button>
+        </form>
+
+        @if(Auth::user()->patente === 'Ficheiro' || Auth::user()->patente === 'Conselheiro')
+            <form action="{{ route('fichas.destroy', $ficha->id) }}" method="POST" class="w-full" onsubmit="return confirm('Tem certeza que deseja excluir esta carta?');">
+                @csrf
+                @method('DELETE')
+                <button type="submit" class="w-full bg-red-600 hover:bg-red-700 text-white font-bold py-2 px-4 rounded shadow-sm text-sm transition duration-150 ease-in-out">
+                    Excluir Carta
+                </button>
+            </form>
+        @endif
+    </div>
+</div>
                     </div>
+
+                    
                 @empty
                     <div class="col-span-full bg-white p-8 text-center rounded-lg shadow-sm">
                         <p class="text-gray-500 text-lg">Nenhuma carta encontrada. A biblioteca está vazia.</p>

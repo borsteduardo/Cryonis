@@ -36,6 +36,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
         Route::post('/categorias', [CategoriaController::class, 'store'])->name('categorias.store');
         Route::get('/fichas/criar', [FichaController::class, 'create'])->name('fichas.create');
         Route::post('/fichas', [FichaController::class, 'store'])->name('fichas.store');
+        Route::delete('/fichas/excluir/{id}', [FichaController::class, 'destroy'])->name('fichas.destroy');
         
         Route::get('/loja/aprovacoes', [LojaController::class, 'painelAprovacao'])->name('loja.painel');
         Route::post('/loja/aprovar/{id}', [LojaController::class, 'aprovar'])->name('loja.aprovar');
