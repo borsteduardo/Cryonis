@@ -12,46 +12,40 @@ Route::get('/', function () {
     return redirect()->route('login');
 });
 
-Route::get('/dashboard', function () {
-    return view('dashboard');
-})->middleware(['auth', 'verified'])->name('dashboard');
-
-Route::middleware('auth')->group(function () {
-    // Qualquer jogador logado pode pedir para comprar uma carta
-    Route::post('/loja/solicitar/{ficha_id}', [LojaController::class, 'solicitar'])->name('loja.solicitar');
-    // Rota para o jogador ver o próprio inventário (Deck)
-    Route::get('/meu-inventario', [InventarioController::class, 'index'])->name('inventario.index');
+Route::middleware(['auth', 'verified'])->group(function () {
+    
+    // --- DASHBOARD E PERFIL ---
+    Route::get('/dashboard', function () { return view('dashboard'); })->name('dashboard');
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
-    // Rota para visualizar as Fichas e o Filtro
+    
+    // --- FICHAS E INVENTÁRIO (Acesso Geral) ---
     Route::get('/fichas', [FichaController::class, 'index'])->name('fichas.index');
-    // Rotas restritas para Ficheiros (Lembrando que o Conselheiro tem passe livre automático no middleware)
+    Route::get('/meu-inventario', [InventarioController::class, 'index'])->name('inventario.index');
+    
+    // --- LOJA (Solicitação Geral) ---
+    Route::post('/loja/solicitar/{ficha_id}', [LojaController::class, 'solicitar'])->name('loja.solicitar');
+
+    // --- BANCO (Visualização Geral) ---
+    Route::get('/banco', [BancoController::class, 'index'])->name('banco.index');
+
+    // --- ROTAS RESTRITAS (Ficheiro/Conselheiro) ---
     Route::middleware('patente:Ficheiro')->group(function () {
         Route::get('/categorias/criar', [CategoriaController::class, 'create'])->name('categorias.create');
         Route::post('/categorias', [CategoriaController::class, 'store'])->name('categorias.store');
-
         Route::get('/fichas/criar', [FichaController::class, 'create'])->name('fichas.create');
         Route::post('/fichas', [FichaController::class, 'store'])->name('fichas.store');
-        Route::middleware('patente:Ficheiro')->group(function () {
-        // Rotas das categorias e fichas que já estavam aqui...
         
-        // Novas rotas de aprovação da loja
         Route::get('/loja/aprovacoes', [LojaController::class, 'painelAprovacao'])->name('loja.painel');
         Route::post('/loja/aprovar/{id}', [LojaController::class, 'aprovar'])->name('loja.aprovar');
         Route::post('/loja/recusar/{id}', [LojaController::class, 'recusar'])->name('loja.recusar');
     });
-    });
-});
 
-Route::middleware('auth')->group(function () {
-    // Rota para ver o banco e o extrato (Acesso para quem está logado)
-    Route::get('/banco', [BancoController::class, 'index'])->name('banco.index');
-    
-    // Rota para registrar a transação (Protegida pelo middleware de patente)
+    // --- ROTAS DE REGISTRO FINANCEIRO (Apenas Banqueiro) ---
     Route::post('/banco/transacao', [BancoController::class, 'store'])
-        ->middleware('patente:Banqueiro')
-        ->name('banco.store');
+         ->middleware('patente:Banqueiro')
+         ->name('banco.store');
 });
 
 require __DIR__.'/auth.php';
