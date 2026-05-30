@@ -23,7 +23,10 @@ Route::middleware(['auth', 'verified'])->group(function () {
     // --- FICHAS E INVENTÁRIO (Acesso Geral) ---
     Route::get('/fichas', [FichaController::class, 'index'])->name('fichas.index');
     Route::get('/meu-inventario', [InventarioController::class, 'index'])->name('inventario.index');
-    
+    // --- SIMULADOR RNG ---
+    Route::get('/simulador', [\App\Http\Controllers\RngController::class, 'index'])->name('rng.index');
+    Route::post('/simulador/girar', [\App\Http\Controllers\RngController::class, 'girar'])->name('rng.girar');
+
     // --- LOJA (Solicitação Geral) ---
     Route::post('/loja/solicitar/{ficha_id}', [LojaController::class, 'solicitar'])->name('loja.solicitar');
 
@@ -37,7 +40,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
         Route::get('/fichas/criar', [FichaController::class, 'create'])->name('fichas.create');
         Route::post('/fichas', [FichaController::class, 'store'])->name('fichas.store');
         Route::delete('/fichas/excluir/{id}', [FichaController::class, 'destroy'])->name('fichas.destroy');
-        
+
         Route::get('/loja/aprovacoes', [LojaController::class, 'painelAprovacao'])->name('loja.painel');
         Route::post('/loja/aprovar/{id}', [LojaController::class, 'aprovar'])->name('loja.aprovar');
         Route::post('/loja/recusar/{id}', [LojaController::class, 'recusar'])->name('loja.recusar');
