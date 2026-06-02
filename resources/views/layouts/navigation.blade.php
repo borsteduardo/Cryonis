@@ -31,6 +31,10 @@
                     <x-nav-link :href="route('rng.index')" :active="request()->routeIs('rng.*')">
                         {{ __('RNG') }}
                     </x-nav-link>
+
+                    <x-nav-link :href="route('chibis.index')" :active="request()->routeIs('chibis.*')">
+                        {{ __('Chibis') }}
+                    </x-nav-link>
                 </div>
             </div>
 
@@ -97,6 +101,10 @@
 
             <x-responsive-nav-link :href="route('rng.index')" :active="request()->routeIs('rng.*')">
     {{ __('Destino (RNG)') }}
+            </x-responsive-nav-link>
+
+            <x-responsive-nav-link :href="route('chibis.index')" :active="request()->routeIs('chibis.*')">
+                {{ __('Chibis') }}
             </x-responsive-nav-link>
         </div>
 

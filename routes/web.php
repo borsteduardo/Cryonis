@@ -26,6 +26,18 @@ Route::middleware(['auth', 'verified'])->group(function () {
     // --- SIMULADOR RNG ---
     Route::get('/simulador', [\App\Http\Controllers\RngController::class, 'index'])->name('rng.index');
     Route::post('/simulador/girar', [\App\Http\Controllers\RngController::class, 'girar'])->name('rng.girar');
+    // --- GACHA CHIBIS (Acesso Geral) ---
+    Route::get('/chibis', [\App\Http\Controllers\ChibiController::class, 'index'])->name('chibis.index');
+    Route::get('/chibis/inventario', [\App\Http\Controllers\ChibiController::class, 'inventario'])->name('chibis.inventario');
+    Route::post('/chibis/comprar-giro', [\App\Http\Controllers\ChibiController::class, 'comprarGiro'])->name('chibis.comprar');
+    Route::post('/chibis/girar', [\App\Http\Controllers\ChibiController::class, 'girar'])->name('chibis.girar');
+
+    // --- GACHA CHIBIS (Administração - Apenas Ficheiro/Conselheiro) ---
+    Route::middleware('patente:Ficheiro')->group(function () {
+        Route::post('/chibis/cadastrar', [\App\Http\Controllers\ChibiController::class, 'store'])->name('chibis.store');
+        Route::delete('/chibis/excluir/{id}', [\App\Http\Controllers\ChibiController::class, 'destroy'])->name('chibis.destroy');
+    });
+// As rotas de view (index e inventário) e de admin (store/destroy) colocaremos junto com as views.
 
     // --- LOJA (Solicitação Geral) ---
     Route::post('/loja/solicitar/{ficha_id}', [LojaController::class, 'solicitar'])->name('loja.solicitar');
