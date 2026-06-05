@@ -35,6 +35,53 @@
                     <x-nav-link :href="route('chibis.index')" :active="request()->routeIs('chibis.*')">
                         {{ __('Chibis') }}
                     </x-nav-link>
+
+                    <x-nav-link :href="route('passe.index')" :active="request()->routeIs('passe.*')">
+                        {{ __('Passe de Batalha') }}
+                    </x-nav-link>
+
+                    <!-- Link Administrativo (Só aparece para Ficheiros e Conselheiros) -->
+<!-- Menu Dropdown Admin (Só aparece para Staff) -->
+@if(Auth::user()->patente === 'Ficheiro' || Auth::user()->patente === 'Conselheiro')
+    <div class="hidden sm:flex sm:items-center sm:ms-6">
+        <x-dropdown align="right" width="48">
+            <x-slot name="trigger">
+                <button class="inline-flex items-center px-3 py-2 border border-transparent text-sm leading-4 font-bold rounded-md text-red-500 hover:text-red-400 focus:outline-none transition ease-in-out duration-150 mt-1">
+                    <div>⚙️ Admin</div>
+                    <div class="ms-1">
+                        <svg class="fill-current h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
+                            <path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd" />
+                        </svg>
+                    </div>
+                </button>
+            </x-slot>
+
+            <x-slot name="content" class="bg-[#09090b] border border-gray-800">
+                <!-- Categoria: Passe de Batalha -->
+                <div class="block px-4 py-2 text-[0.65rem] text-gray-500 font-black uppercase tracking-widest bg-gray-900 border-b border-gray-800">
+                    Passe de Batalha
+                </div>
+                <x-dropdown-link :href="route('admin.passes.index')" class="text-pink-500 hover:bg-gray-800 hover:text-pink-400 font-bold transition">
+                    {{ __('Gerenciar Temporadas') }}
+                </x-dropdown-link>
+                <x-dropdown-link :href="route('admin.passes.verificacoes')" class="text-yellow-500 hover:bg-gray-800 hover:text-yellow-400 font-bold transition">
+                    {{ __('Auditoria de Missões') }}
+                </x-dropdown-link>
+                
+                <!-- Futuramente, você pode adicionar: -->
+                <!--
+                <div class="block px-4 py-2 text-[0.65rem] text-gray-500 font-black uppercase tracking-widest bg-gray-900 border-b border-t border-gray-800">
+                    Sistema de Chibis
+                </div>
+                <x-dropdown-link href="#" class="text-indigo-500 hover:bg-gray-800 hover:text-indigo-400 font-bold">
+                    {{ __('Gerenciar Gacha') }}
+                </x-dropdown-link>
+                -->
+            </x-slot>
+        </x-dropdown>
+    </div>
+@endif
+                    
                 </div>
             </div>
 
@@ -106,6 +153,32 @@
             <x-responsive-nav-link :href="route('chibis.index')" :active="request()->routeIs('chibis.*')">
                 {{ __('Chibis') }}
             </x-responsive-nav-link>
+
+            <x-responsive-nav-link :href="route('passe.index')" :active="request()->routeIs('passe.*')">
+                {{ __('Passe de Batalha') }}
+            </x-responsive-nav-link>
+
+            <!-- Link Administrativo (Só aparece para Ficheiros e Conselheiros) -->
+<!-- Admin no Celular -->
+@if(Auth::user()->patente === 'Ficheiro' || Auth::user()->patente === 'Conselheiro')
+    <div class="pt-4 pb-1 border-t border-gray-800">
+        <div class="px-4 text-xs text-gray-500 font-black uppercase tracking-widest mb-2">
+            ⚙️ Administração
+        </div>
+        
+        <div class="px-4 text-[0.65rem] text-gray-600 font-bold uppercase tracking-wider mb-1 mt-2">
+            Passe de Batalha
+        </div>
+        <div class="space-y-1">
+            <x-responsive-nav-link :href="route('admin.passes.index')" :active="request()->routeIs('admin.passes.index')" class="text-pink-500 font-bold">
+                {{ __('Gerenciar Temporadas') }}
+            </x-responsive-nav-link>
+            <x-responsive-nav-link :href="route('admin.passes.verificacoes')" :active="request()->routeIs('admin.passes.verificacoes')" class="text-yellow-500 font-bold">
+                {{ __('Auditoria de Missões') }}
+            </x-responsive-nav-link>
+        </div>
+    </div>
+@endif
         </div>
 
         <div class="pt-4 pb-1 border-t border-purple-900/50">

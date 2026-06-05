@@ -30,4 +30,8 @@ class User extends Authenticatable
             'ultima_compra_giro' => 'datetime',
         ];
     }
+
+    public function userMissoes() {
+        return $this->hasMany(UserMissao::class, 'user_id');
+    }
 }

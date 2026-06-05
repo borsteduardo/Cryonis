@@ -23,6 +23,11 @@ Route::middleware(['auth', 'verified'])->group(function () {
     // --- FICHAS E INVENTÁRIO (Acesso Geral) ---
     Route::get('/fichas', [FichaController::class, 'index'])->name('fichas.index');
     Route::get('/meu-inventario', [InventarioController::class, 'index'])->name('inventario.index');
+
+    // --- PASSE DE BATALHA (Acesso Geral) ---
+    Route::get('/passe', [\App\Http\Controllers\PasseController::class, 'index'])->name('passe.index');
+    Route::post('/passe/missao/{missao_id}/solicitar', [\App\Http\Controllers\PasseController::class, 'solicitarVerificacao'])->name('passe.missao.solicitar');
+    Route::post('/passe/comprar-premium', [\App\Http\Controllers\PasseController::class, 'comprarPremium'])->name('passe.comprarPremium');
     // --- SIMULADOR RNG ---
     Route::get('/simulador', [\App\Http\Controllers\RngController::class, 'index'])->name('rng.index');
     Route::post('/simulador/girar', [\App\Http\Controllers\RngController::class, 'girar'])->name('rng.girar');
@@ -56,6 +61,15 @@ Route::middleware(['auth', 'verified'])->group(function () {
         Route::get('/loja/aprovacoes', [LojaController::class, 'painelAprovacao'])->name('loja.painel');
         Route::post('/loja/aprovar/{id}', [LojaController::class, 'aprovar'])->name('loja.aprovar');
         Route::post('/loja/recusar/{id}', [LojaController::class, 'recusar'])->name('loja.recusar');
+
+        // --- GERENCIAMENTO DO PASSE (Apenas Staff) ---
+    Route::get('/admin/passes', [\App\Http\Controllers\AdminPasseController::class, 'index'])->name('admin.passes.index');
+    Route::post('/admin/passes', [\App\Http\Controllers\AdminPasseController::class, 'storePasse'])->name('admin.passes.store');
+    Route::post('/admin/passes/{passe_id}/nivel', [\App\Http\Controllers\AdminPasseController::class, 'storeNivel'])->name('admin.passes.nivel.store');
+    Route::post('/admin/passes/{passe_id}/missao', [\App\Http\Controllers\AdminPasseController::class, 'storeMissao'])->name('admin.passes.missao.store');
+    Route::get('/admin/passes/verificacoes', [\App\Http\Controllers\AdminPasseController::class, 'verificacoes'])->name('admin.passes.verificacoes');
+Route::post('/admin/passes/verificacoes/{id}/aprovar', [\App\Http\Controllers\AdminPasseController::class, 'aprovarMissao'])->name('admin.passes.verificacoes.aprovar');
+Route::post('/admin/passes/verificacoes/{id}/recusar', [\App\Http\Controllers\AdminPasseController::class, 'recusarMissao'])->name('admin.passes.verificacoes.recusar');
     });
 
     // --- ROTAS DE REGISTRO FINANCEIRO (Apenas Banqueiro) ---
