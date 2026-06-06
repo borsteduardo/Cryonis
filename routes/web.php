@@ -36,6 +36,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('/chibis/inventario', [\App\Http\Controllers\ChibiController::class, 'inventario'])->name('chibis.inventario');
     Route::post('/chibis/comprar-giro', [\App\Http\Controllers\ChibiController::class, 'comprarGiro'])->name('chibis.comprar');
     Route::post('/chibis/girar', [\App\Http\Controllers\ChibiController::class, 'girar'])->name('chibis.girar');
+    Route::post('/chibis/girar-10x', [\App\Http\Controllers\ChibiController::class, 'girar10x'])->name('chibis.girar10x');
 
     // --- GACHA CHIBIS (Administração - Apenas Ficheiro/Conselheiro) ---
     Route::middleware('patente:Ficheiro')->group(function () {

@@ -103,6 +103,62 @@ class ChibiController extends Controller
         ]);
     }
 
+    public function girar10x(Request $request)
+    {
+        $user = Auth::user();
+
+        if ($user->giros_chibi < 10) {
+            return redirect()->back()->with('erro', 'Giros insuficientes! Você precisa de pelo menos 10 giros.');
+        }
+
+        $user->giros_chibi -= 10;
+        $user->save();
+
+        $chibisGanhos = [];
+
+        for ($i = 0; $i < 10; $i++) {
+            
+            $numeroSorteado = rand(1, 10000); 
+
+            if ($numeroSorteado <= 50) { $raridade = 'Secreto'; } 
+            elseif ($numeroSorteado <= 250) { $raridade = 'Mítico'; } 
+            elseif ($numeroSorteado <= 1250) { $raridade = 'Lendário'; } 
+            elseif ($numeroSorteado <= 3250) { $raridade = 'Épico'; } 
+            elseif ($numeroSorteado <= 5750) { $raridade = 'Raro'; } 
+            elseif ($numeroSorteado <= 8000) { $raridade = 'Incomum'; } 
+            else { $raridade = 'Comum'; }
+
+            // Tenta buscar o Chibi da raridade sorteada
+            $chibiSorteado = \App\Models\Chibi::where('raridade', $raridade)->inRandomOrder()->first();
+
+            // PLANO B: Se não existir nenhum chibi dessa raridade cadastrado, pega qualquer um aleatório
+            if (!$chibiSorteado) {
+                $chibiSorteado = \App\Models\Chibi::inRandomOrder()->first();
+            }
+
+            // Se o banco não estiver 100% vazio, ele salva no inventário
+            if ($chibiSorteado) {
+                $inventario = \App\Models\InventarioChibi::where('user_id', $user->id)
+                                ->where('chibi_id', $chibiSorteado->id)
+                                ->first();
+
+                if ($inventario) {
+                    $inventario->increment('quantidade');
+                } else {
+                    \App\Models\InventarioChibi::create([
+                        'user_id' => $user->id,
+                        'chibi_id' => $chibiSorteado->id,
+                        'quantidade' => 1
+                    ]);
+                }
+
+                $chibisGanhos[] = $chibiSorteado;
+            }
+        }
+
+        return redirect()->back()->with('chibisSorteados10x', $chibisGanhos);
+    }
+
     // --- MÉTODOS DE ADMINISTRAÇÃO ---
     public function store(Request $request)
     {

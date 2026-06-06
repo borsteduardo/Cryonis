@@ -76,6 +76,13 @@
                     Puxar Chibi
                 </button>
 
+                <form action="{{ route('chibis.girar10x') }}" method="POST" class="inline-block mt-4">
+                    @csrf
+                    <button type="submit" class="bg-gradient-to-r from-purple-600 to-indigo-600 hover:from-purple-500 hover:to-indigo-500 text-white font-black py-3 px-8 rounded-xl shadow-[0_0_15px_rgba(79,70,229,0.5)] transition transform hover:scale-105 border border-indigo-400">
+                        🎰 GIRAR 10x
+                    </button>
+                </form>
+
                 <div id="gacha-resultado" class="w-full max-w-md mx-auto">
                     <p class="text-gray-400 text-sm mb-2">Você conseguiu um...</p>
                     <h3 id="res-raridade" class="text-xl tracking-widest uppercase mb-1">Raridade</h3>
@@ -166,7 +173,7 @@
             
             btn.disabled = true;
             btn.innerText = "Sorteando...";
-            resBox.style.display = 'none'; // Esconde resultado anterior
+            resBox.style.display = 'none';
 
             fetch("{{ route('chibis.girar') }}", {
                 method: "POST",
@@ -179,11 +186,10 @@
             .then(data => {
                 if (data.erro) {
                     alert(data.erro);
-                    window.location.reload(); // Recarrega se der erro de giros
+                    window.location.reload(); 
                     return;
                 }
 
-                // Simula um delay de suspense antes de mostrar a carta
                 setTimeout(() => {
                     const ch = data.chibi;
                     
@@ -192,13 +198,11 @@
                     
                     const raridadeEl = document.getElementById('res-raridade');
                     raridadeEl.innerText = ch.raridade;
-                    // Limpa classes de cor antigas e coloca a nova
                     raridadeEl.className = 'text-xl tracking-widest uppercase mb-1 raridade-' + ch.raridade;
 
                     resBox.style.display = 'block';
                     btn.innerText = "Girar Novamente";
                     
-                    // Se a pessoa tiver mais giros, libera o botão. Se não, avisa.
                     let girosAtuais = parseInt(document.querySelector('strong.text-white').innerText);
                     document.querySelector('strong.text-white').innerText = girosAtuais - 1;
                     
@@ -208,7 +212,7 @@
                         btn.innerText = "Sem Giros";
                     }
 
-                }, 1500); // 1.5 segundos de "suspense"
+                }, 1500);
             })
             .catch(error => {
                 console.error("Erro:", error);
@@ -217,4 +221,143 @@
             });
         }
     </script>
+        
+    @if(session('chibisSorteados10x'))
+        
+        <style>
+            /* Tema da Invocação: Nebulosa Azul/Branca Cintilante */
+            .bg-nebula {
+                background: radial-gradient(circle at 50% 50%, #1e3a8a 0%, #030303 80%);
+                position: relative;
+            }
+            .bg-nebula::before {
+                content: '';
+                position: absolute;
+                inset: 0;
+                background-image: radial-gradient(white 1px, transparent 1px);
+                background-size: 50px 50px;
+                opacity: 0.15;
+                animation: starTwinkle 3s infinite alternate;
+            }
+
+            @keyframes starTwinkle {
+                0% { opacity: 0.05; transform: scale(1); }
+                100% { opacity: 0.25; transform: scale(1.05); }
+            }
+
+            /* Fundos das Cartas por Raridade */
+            .bg-card-Comum { background: linear-gradient(135deg, #374151, #111827); border-color: #9ca3af; }
+            .bg-card-Incomum { background: linear-gradient(135deg, #047857, #064e3b); border-color: #34d399; }
+            .bg-card-Raro { background: linear-gradient(135deg, #1d4ed8, #1e3a8a); border-color: #60a5fa; }
+            .bg-card-Épico { background: linear-gradient(135deg, #6d28d9, #4c1d95); border-color: #a78bfa; }
+            
+            .bg-card-Lendário { 
+                background: linear-gradient(135deg, #b45309, #78350f); 
+                border-color: #fbbf24; 
+                box-shadow: 0 0 15px rgba(251,191,36,0.5); 
+            }
+            .bg-card-Mítico { 
+                background: linear-gradient(135deg, #b91c1c, #7f1d1d); 
+                border-color: #f87171; 
+                box-shadow: 0 0 25px rgba(239,68,68,0.7); 
+            }
+            .bg-card-Secreto { 
+                background: radial-gradient(circle at top right, #ffffff, transparent 60%), linear-gradient(135deg, #0ea5e9, #0f172a); 
+                border-color: #ffffff; 
+                box-shadow: 0 0 35px rgba(255,255,255,0.9); 
+            }
+
+            /* Animação das cartas surgindo */
+            @keyframes popInGacha {
+                0% { opacity: 0; transform: scale(0.5) translateY(50px) rotate(-10deg); filter: brightness(2); }
+                60% { transform: scale(1.1) translateY(-10px) rotate(3deg); filter: brightness(1.5); }
+                100% { opacity: 1; transform: scale(1) translateY(0) rotate(0); filter: brightness(1); }
+            }
+            .animate-pop-in-gacha {
+                animation: popInGacha 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
+            }
+            
+            /* Brilho varrendo a carta (Reflexo de luz) */
+            .shine-effect {
+                position: absolute; top: 0; left: -100%; width: 50%; height: 100%;
+                background: linear-gradient(to right, rgba(255,255,255,0) 0%, rgba(255,255,255,0.3) 50%, rgba(255,255,255,0) 100%);
+                transform: skewX(-20deg); animation: shineSwipe 3s infinite;
+            }
+            @keyframes shineSwipe {
+                0% { left: -100%; } 20% { left: 200%; } 100% { left: 200%; }
+            }
+        </style>
+
+        <div id="telaAnimacao10x" class="fixed inset-0 z-[60] flex flex-col items-center justify-center bg-nebula overflow-hidden">
+            
+            <div class="relative w-40 h-40 mb-8 flex justify-center items-center">
+                <div class="absolute inset-0 border-t-4 border-b-4 border-blue-400 rounded-full animate-spin shadow-[0_0_20px_rgba(96,165,250,0.6)]"></div>
+                <div class="absolute inset-4 border-l-4 border-r-4 border-white rounded-full animate-spin shadow-[0_0_20px_rgba(255,255,255,0.8)]" style="animation-direction: reverse; animation-duration: 1.2s;"></div>
+                
+                <div class="absolute inset-0 flex items-center justify-center text-6xl animate-pulse drop-shadow-[0_0_15px_rgba(255,255,255,0.8)]">✨</div>
+            </div>
+
+            <h2 class="text-3xl font-black text-transparent bg-clip-text bg-gradient-to-r from-blue-300 to-white uppercase tracking-widest animate-pulse drop-shadow-[0_0_10px_rgba(255,255,255,0.5)]">
+                Canalizando Energia...
+            </h2>
+        </div>
+
+        <div class="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-90 backdrop-blur-md px-4 hidden" id="modalResultados10x">
+            <div class="bg-[#09090b] border border-blue-500 rounded-3xl shadow-[0_0_60px_rgba(59,130,246,0.3)] p-6 md:p-10 max-w-6xl w-full text-center relative max-h-[90vh] overflow-y-auto custom-scrollbar">
+                
+                <h2 class="text-4xl md:text-5xl font-black text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-pink-500 uppercase tracking-widest mb-2 drop-shadow-md">
+                    Invocação Concluída!
+                </h2>
+                <p class="text-gray-400 mb-10 font-bold uppercase tracking-widest text-sm">Estes são os seus 10 novos Chibis</p>
+
+                <div class="grid grid-cols-2 md:grid-cols-5 gap-4 md:gap-6 mb-10">
+                    @foreach(session('chibisSorteados10x') as $index => $chibi)
+                        <div class="chibi-card-10x bg-card-{{ $chibi['raridade'] }} border-2 rounded-xl p-5 flex flex-col items-center justify-center relative overflow-hidden opacity-0" 
+                             style="animation-delay: {{ $index * 0.15 }}s;">
+                            
+                            <div class="absolute inset-0 bg-black opacity-40 mix-blend-overlay pointer-events-none"></div>
+                            
+                            @if(in_array($chibi['raridade'], ['Lendário', 'Mítico', 'Secreto']))
+                                <div class="shine-effect"></div>
+                            @endif
+
+                            <span class="text-[0.65rem] uppercase font-black text-white bg-black/60 px-3 py-1 rounded-full mb-4 z-10 border border-white/20 backdrop-blur-sm shadow-md">
+                                {{ $chibi['raridade'] }}
+                            </span>
+                            
+                            <h3 class="text-lg font-black text-white z-10 uppercase leading-tight drop-shadow-[0_2px_4px_rgba(0,0,0,0.8)]">
+                                {{ $chibi['nome'] }}
+                            </h3>
+                            
+                        </div>
+                    @endforeach
+                </div>
+
+                <button onclick="fecharModal10x()" class="bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-500 hover:to-indigo-500 text-white font-black py-4 px-12 rounded-xl transition shadow-[0_0_20px_rgba(59,130,246,0.5)] transform hover:scale-105 border border-blue-400 uppercase tracking-widest text-lg">
+                    Adicionar à Coleção
+                </button>
+            </div>
+        </div>
+
+        <script>
+            document.addEventListener('DOMContentLoaded', function() {
+                // Suspense rola por 3 segundos agora para dar tempo de curtir a "Nebulosa"
+                setTimeout(() => {
+                    document.getElementById('telaAnimacao10x').style.display = 'none';
+                    
+                    const modal = document.getElementById('modalResultados10x');
+                    modal.classList.remove('hidden');
+
+                    const cards = document.querySelectorAll('.chibi-card-10x');
+                    cards.forEach(card => {
+                        card.classList.add('animate-pop-in-gacha');
+                    });
+                }, 3000); 
+            });
+
+            function fecharModal10x() {
+                document.getElementById('modalResultados10x').style.display = 'none';
+            }
+        </script>
+    @endif
 </x-app-layout>
