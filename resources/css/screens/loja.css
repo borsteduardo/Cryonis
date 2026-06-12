@@ -2,5 +2,127 @@
 /* Shop/store interface and products */
 
 @layer components {
-    /* Custom loja-specific styles here */
+    /* Fundo principal da página */
+    body,
+    .min-h-screen,
+    main,
+    .bg-gray-100 {
+        background-color: #030303 !important;
+    }
+
+    /* Título do Cabeçalho */
+    .header-title {
+        color: #a855f7 !important;
+        text-transform: uppercase;
+        letter-spacing: 2px;
+        text-shadow: 0 0 10px rgba(147, 51, 234, 0.5);
+        font-weight: 900 !important;
+    }
+
+    /* Cartão Principal */
+    .bg-white {
+        background-color: #09090b !important;
+        border: 1px solid rgba(147, 51, 234, 0.4) !important;
+        box-shadow: 0 0 20px rgba(147, 51, 234, 0.15) !important;
+        position: relative;
+        border-top-width: 1px !important;
+    }
+
+    /* Linha de degradê no topo do cartão */
+    .bg-white::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 3px;
+        background: linear-gradient(90deg, #6d28d9, #db2777, #fca5a5);
+    }
+
+    /* Títulos e Textos */
+    h3.text-gray-800 {
+        color: #d8b4fe !important;
+        font-weight: bold !important;
+    }
+
+    /* ================= ESTILOS DA TABELA ================= */
+    table thead,
+    .bg-gray-50 {
+        background-color: rgba(147, 51, 234, 0.1) !important;
+    }
+
+    table th {
+        color: #d8b4fe !important;
+        border-bottom: 1px solid rgba(147, 51, 234, 0.3) !important;
+    }
+
+    table tr {
+        border-bottom: 1px solid rgba(147, 51, 234, 0.1) !important;
+    }
+
+    table tr:hover,
+    tr.hover\:bg-gray-50:hover {
+        background-color: rgba(147, 51, 234, 0.05) !important;
+    }
+
+    /* Células da Tabela */
+    td.text-gray-500 {
+        color: #a1a1aa !important;
+    }
+
+    td.text-indigo-600 {
+        color: #c084fc !important;
+        font-weight: bold !important;
+        text-transform: uppercase;
+    }
+
+    td.text-gray-900 {
+        color: #e5e7eb !important;
+        font-weight: bold !important;
+    }
+
+    /* Preço da Carta em Dourado */
+    td.text-emerald-600 {
+        color: #fbbf24 !important;
+        font-weight: 900 !important;
+        text-shadow: 0 0 10px rgba(251, 191, 36, 0.3) !important;
+    }
+
+    /* ================= BOTÕES DE AÇÃO ================= */
+    button.bg-green-500 {
+        background: linear-gradient(90deg, #10b981, #059669) !important;
+        border: 1px solid #34d399 !important;
+        color: white !important;
+        transition: all 0.3s ease !important;
+    }
+
+    button.bg-green-500:hover {
+        box-shadow: 0 0 15px rgba(16, 185, 129, 0.4) !important;
+        transform: scale(1.05) !important;
+    }
+
+    button.bg-red-500 {
+        background: linear-gradient(90deg, #dc2626, #991b1b) !important;
+        border: 1px solid #f87171 !important;
+        color: white !important;
+        transition: all 0.3s ease !important;
+    }
+
+    button.bg-red-500:hover {
+        box-shadow: 0 0 15px rgba(239, 68, 68, 0.4) !important;
+        transform: scale(1.05) !important;
+    }
+
+    /* ================= MENSAGENS DE ALERTA ================= */
+    div.bg-green-100 {
+        background-color: rgba(16, 185, 129, 0.1) !important;
+        border-color: #10b981 !important;
+        color: #34d399 !important;
+    }
+
+    div.bg-red-100 {
+        background-color: rgba(239, 68, 68, 0.1) !important;
+        border-color: #ef4444 !important;
+        color: #f87171 !important;
+    }
 }
