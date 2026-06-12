@@ -5,6 +5,40 @@
         </h2>
     </x-slot>
 
+    <style>
+        body, .min-h-screen, main, .bg-gray-100 { background-color: #030303 !important; }
+        .header-title { color: #a855f7 !important; text-transform: uppercase; letter-spacing: 2px; text-shadow: 0 0 10px rgba(147, 51, 234, 0.5); font-weight: 900 !important; }
+
+        /* O "Cartão" do Formulário */
+        .bg-white {
+            background-color: #09090b !important; border: 1px solid rgba(147, 51, 234, 0.4) !important;
+            box-shadow: 0 0 20px rgba(147, 51, 234, 0.15) !important; position: relative; color: #e5e7eb !important; border-top-width: 1px !important;
+        }
+        .bg-white::before {
+            content: ''; position: absolute; top: 0; left: 0; width: 100%; height: 3px; background: linear-gradient(90deg, #6d28d9, #db2777, #fca5a5);
+        }
+
+        label.text-gray-700 { color: #d8b4fe !important; font-weight: bold !important; }
+
+        /* Inputs e Textareas */
+        input[type="text"], input[type="number"], input[type="url"], select, textarea {
+            background-color: #030303 !important; border: 1px solid #4c1d95 !important; color: #ffffff !important; border-radius: 6px !important; padding: 10px 14px !important;
+        }
+        input:focus, select:focus, textarea:focus { border-color: #8b5cf6 !important; box-shadow: 0 0 10px rgba(139, 92, 246, 0.3) !important; outline: none !important; }
+        select option { background-color: #09090b !important; color: #fff !important; }
+        input::placeholder, textarea::placeholder { color: #52525b !important; }
+
+        /* Botão Cadastrar */
+        button.bg-green-600 {
+            background: linear-gradient(90deg, #10b981, #059669) !important; border: none !important; color: white !important; font-weight: bold !important; transition: all 0.3s ease !important;
+        }
+        button.bg-green-600:hover { box-shadow: 0 0 15px rgba(16, 185, 129, 0.4) !important; transform: scale(1.02) !important; }
+
+        /* Link Cancelar */
+        a.text-gray-600 { color: #a1a1aa !important; transition: color 0.3s !important; }
+        a.text-gray-600:hover { color: #fff !important; text-decoration: underline !important; }
+    </style>
+
     <div class="py-12">
         <div class="max-w-5xl mx-auto sm:px-6 lg:px-8">
             <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg p-6 border-t-4 border-indigo-500">
