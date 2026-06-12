@@ -1,6 +1,4 @@
-/* Admin Screens Styles */
-/* Administrative pages and management tools */
-
-@layer components {
-    /* Custom admin-specific styles here */
-}
+/* Admin Screen */
+body, .min-h-screen, main { background-color: #030303 !important; }
+.bg-white { background-color: #09090b !important; border: 1px solid rgba(147, 51, 234, 0.4) !important; }
+input { background-color: #030303 !important; border: 1px solid #4c1d95 !important; color: #fff !important; }

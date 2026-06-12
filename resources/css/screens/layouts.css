@@ -1,6 +1,6 @@
-/* Layout Styles */
-/* Navigation, containers, and layout utilities */
-
-@layer components {
-    /* Custom layout-specific styles here */
-}
+/* Layouts */
+body { background-color: #030303; color: #e5e7eb; }
+main { background-color: #030303 !important; }
+nav { background-color: #09090b; border-bottom: 2px solid #4c1d95; }
+nav a { color: #e5e7eb; transition: color 0.3s; }
+nav a:hover { color: #a855f7; }

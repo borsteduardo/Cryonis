@@ -1,6 +1,5 @@
-/* Banco (Bank) Screen Styles */
-/* Bank/currency management */
-
-@layer components {
-    /* Custom banco-specific styles here */
-}
+/* Banco Screen */
+body, .min-h-screen, main { background-color: #030303 !important; }
+.bg-white { background-color: #09090b !important; border: 1px solid rgba(147, 51, 234, 0.4) !important; }
+table { background-color: #030303 !important; }
+th { color: #a855f7 !important; border-color: #4c1d95 !important; }
