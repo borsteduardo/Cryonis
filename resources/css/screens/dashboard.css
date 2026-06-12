@@ -1,8 +1,7 @@
 /* Dashboard Screen Styles */
 /* Main dashboard view after login */
 
-@layer components {
-    /* Força o fundo da página inteira a ficar escuro */
+@layer base {
     body,
     .min-h-screen,
     main,
@@ -10,14 +9,14 @@
         background-color: #030303 !important;
     }
 
-    /* Estiliza o cabeçalho padrão do Laravel */
     header {
         background-color: #09090b !important;
         border-bottom: 1px solid rgba(147, 51, 234, 0.3) !important;
         box-shadow: 0 4px 20px rgba(147, 51, 234, 0.05) !important;
     }
+}
 
-    /* Estiliza o título do cabeçalho */
+@layer components {
     .header-title {
         color: #a855f7 !important;
         text-transform: uppercase;
@@ -26,7 +25,6 @@
         font-weight: 900 !important;
     }
 
-    /* Sobrescreve os "cartões" brancos do Laravel */
     .bg-white {
         background-color: #09090b !important;
         border: 1px solid rgba(147, 51, 234, 0.4) !important;
@@ -34,7 +32,6 @@
         position: relative;
     }
 
-    /* Cria a linha de degradê no topo do cartão */
     .bg-white::before {
         content: "";
         position: absolute;
@@ -45,7 +42,6 @@
         background: linear-gradient(90deg, #6d28d9, #db2777, #fca5a5);
     }
 
-    /* Clareia os textos que antes eram escuros */
     .text-gray-900,
     .text-gray-800,
     .text-gray-700 {

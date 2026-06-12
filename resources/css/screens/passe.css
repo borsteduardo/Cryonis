@@ -1,6 +1,16 @@
 /* Passe (Battle Pass) Screen Styles */
 /* Battle pass system and progression */
 
+@layer base {
+    body, .min-h-screen, main, .bg-gray-100 {
+        background-color: #030303 !important;
+    }
+    header {
+        background-color: #09090b !important;
+        border-bottom: 1px solid rgba(147, 51, 234, 0.3) !important;
+    }
+}
+
 @layer components {
     body,
     .min-h-screen,
