@@ -1,6 +1,7 @@
-/* Reusable Components Styles */
-/* Shared UI components used across multiple screens */
-
-@layer components {
-    /* Custom component-specific styles here */
-}
+/* Components */
+button { cursor: pointer; transition: all 0.3s; border: none; }
+.primary-button { background: linear-gradient(90deg, #6d28d9, #8b5cf6) !important; color: #fff !important; }
+.primary-button:hover { box-shadow: 0 0 15px rgba(139, 92, 246, 0.6) !important; }
+.danger-button { background: linear-gradient(90deg, #dc2626, #b91c1c) !important; }
+input, textarea { outline: none; }
+input:focus, textarea:focus { border-color: #8b5cf6 !important; }
