@@ -5,6 +5,67 @@
         </h2>
     </x-slot>
 
+    <style>
+        body, .min-h-screen, main, .bg-gray-100 { background-color: #030303 !important; }
+        .header-title { color: #a855f7 !important; text-transform: uppercase; letter-spacing: 2px; text-shadow: 0 0 10px rgba(147, 51, 234, 0.5); font-weight: 900 !important; }
+
+        /* Estilo da Caixa do Jogo */
+        .rng-box {
+            background-color: #09090b !important;
+            border: 1px solid rgba(147, 51, 234, 0.4) !important;
+            box-shadow: 0 0 20px rgba(147, 51, 234, 0.15) !important;
+            position: relative;
+            color: #e5e7eb !important;
+            padding: 3rem;
+            border-radius: 1rem;
+            text-align: center;
+        }
+        .rng-box::before { content: ''; position: absolute; top: 0; left: 0; width: 100%; height: 3px; background: linear-gradient(90deg, #6d28d9, #db2777, #fca5a5); border-top-left-radius: 1rem; border-top-right-radius: 1rem; }
+
+        .numero-display {
+            font-size: 8rem;
+            font-weight: 900;
+            color: #d8b4fe;
+            text-shadow: 0 0 30px rgba(168, 85, 247, 0.6);
+            margin: 2rem 0;
+            transition: all 0.2s ease;
+        }
+
+        .numero-display.animando {
+            transform: scale(1.1);
+            color: #fff;
+            text-shadow: 0 0 50px rgba(255, 255, 255, 0.8);
+        }
+
+        /* Botão Girar */
+        button.btn-rng {
+            background: linear-gradient(90deg, #6d28d9, #db2777) !important;
+            border: none !important;
+            color: white !important;
+            font-weight: 900 !important;
+            font-size: 1.5rem !important;
+            padding: 15px 40px !important;
+            border-radius: 50px !important;
+            transition: all 0.3s ease !important;
+            box-shadow: 0 10px 20px rgba(219, 39, 119, 0.3) !important;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+        button.btn-rng:hover { transform: scale(1.05) !important; box-shadow: 0 15px 30px rgba(219, 39, 119, 0.6) !important; }
+        button.btn-rng:active { transform: scale(0.95) !important; }
+        button.btn-rng:disabled { opacity: 0.5; cursor: not-allowed; transform: none !important; }
+
+        /* Tabela Leaderboard */
+        .leaderboard-box { background-color: rgba(147, 51, 234, 0.05) !important; border: 1px solid rgba(147, 51, 234, 0.3) !important; border-radius: 1rem; overflow: hidden; }
+        .leaderboard-header { background: linear-gradient(135deg, #1a0b2e, #4c1d95) !important; color: #d8b4fe !important; padding: 1rem; text-align: center; font-weight: 900; text-transform: uppercase; letter-spacing: 1px; }
+        .table-row { border-bottom: 1px solid rgba(147, 51, 234, 0.2); transition: background 0.2s; }
+        .table-row:hover { background-color: rgba(147, 51, 234, 0.1); }
+        .rank-gold { color: #fbbf24; text-shadow: 0 0 10px rgba(251, 191, 36, 0.5); font-weight: 900; font-size: 1.2rem; }
+        
+        .msg-novo-recorde { display: none; color: #10b981; font-weight: bold; margin-top: 10px; font-size: 1.2rem; text-transform: uppercase; letter-spacing: 1px; animation: piscar 1s infinite; }
+        @keyframes piscar { 0%, 100% { opacity: 1; text-shadow: 0 0 10px rgba(16, 185, 129, 0.5); } 50% { opacity: 0.5; text-shadow: none; } }
+    </style>
+
     <div class="py-12">
         <div class="max-w-4xl mx-auto sm:px-6 lg:px-8">
             

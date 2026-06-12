@@ -5,6 +5,39 @@
         </h2>
     </x-slot>
 
+    <style>
+        body, .min-h-screen, main { background-color: #030303 !important; }
+        .dark-box { background-color: #09090b; border: 1px solid rgba(147, 51, 234, 0.4); box-shadow: 0 0 20px rgba(147, 51, 234, 0.15); border-radius: 1rem; padding: 1.5rem; color: #e5e7eb; position: relative; overflow: hidden; }
+        
+        /* Nova Timeline estilo Valorant/Apex */
+        .timeline-wrapper { position: relative; padding: 8rem 1rem; overflow-x: auto; white-space: nowrap; scrollbar-width: thin; scrollbar-color: #9333ea #111827; }
+        .timeline-line-bg { position: absolute; top: 50%; left: 0; right: 0; height: 6px; background-color: #1f2937; transform: translateY(-50%); z-index: 1; border-radius: 10px; }
+        .timeline-line-fill { position: absolute; top: 0; left: 0; height: 100%; background: linear-gradient(90deg, #6d28d9, #db2777); border-radius: 10px; transition: 0.5s; box-shadow: 0 0 10px rgba(219,39,119,0.5); }
+        .timeline-nodes { display: inline-flex; align-items: center; gap: 5rem; position: relative; z-index: 2; padding: 0 2rem; }
+        
+        .node-container { display: flex; flex-direction: column; align-items: center; justify-content: center; position: relative; }
+        .node-circle { width: 3.5rem; height: 3.5rem; border-radius: 50%; background-color: #111827; border: 4px solid #374151; display: flex; align-items: center; justify-content: center; font-weight: 900; font-size: 1.2rem; transition: 0.3s; z-index: 3; }
+        .node-container.desbloqueado .node-circle { border-color: #10b981; color: #10b981; box-shadow: 0 0 15px rgba(16,185,129,0.4); }
+        .node-container.atual .node-circle { border-color: #db2777; color: #db2777; box-shadow: 0 0 20px rgba(219,39,119,0.8); transform: scale(1.1); }
+        
+        /* Caixas de Recompensa (Top = Free, Bottom = Premium) */
+        .reward-box { position: absolute; width: 110px; text-align: center; padding: 0.5rem; border-radius: 0.5rem; background: #000; border: 1px solid #374151; opacity: 0.8; transition: 0.3s; white-space: normal; }
+        .reward-free { bottom: 100%; margin-bottom: 2rem; }
+        .reward-premium { top: 100%; margin-top: 2rem; border-color: #831843; background: #1a0812; }
+        .reward-free::after, .reward-premium::before { content: ''; position: absolute; width: 2px; height: 1.5rem; background: #374151; left: 50%; transform: translateX(-50%); z-index: -1; }
+        .reward-free::after { top: 100%; }
+        .reward-premium::before { bottom: 100%; background: #831843; }
+        
+        .node-container.desbloqueado .reward-box { opacity: 1; border-color: #10b981; }
+        .node-container.desbloqueado .reward-premium { border-color: #db2777; }
+        .reward-icon { font-size: 1.5rem; margin-bottom: 0.2rem; }
+
+        /* Missões */
+        .missao-card { background-color: #111827; border: 1px solid #374151; border-radius: 0.5rem; padding: 1rem; margin-bottom: 0.5rem; display: flex; justify-content: space-between; align-items: center; border-left: 4px solid #4c1d95; }
+        .badge-pendente { background: rgba(245, 158, 11, 0.2); color: #fbbf24; border: 1px solid #f59e0b; padding: 5px 10px; border-radius: 5px; font-size: 0.75rem; font-weight: bold; text-transform: uppercase; }
+        .badge-aprovada { background: rgba(16, 185, 129, 0.2); color: #10b981; border: 1px solid #10b981; padding: 5px 10px; border-radius: 5px; font-size: 0.75rem; font-weight: bold; text-transform: uppercase; opacity: 0.7; }
+    </style>
+
     <div class="py-12 max-w-7xl mx-auto sm:px-6 lg:px-8 space-y-6">
 
         @if (session('sucesso')) <div class="bg-green-900 border border-green-500 text-green-200 px-4 py-3 rounded">{{ session('sucesso') }}</div> @endif
