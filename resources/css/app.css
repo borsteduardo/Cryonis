@@ -1,3 +1,19 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+/* Screen-specific styles */
+@import "./screens/layouts.css";
+@import "./screens/components.css";
+@import "./screens/auth.css";
+@import "./screens/dashboard.css";
+@import "./screens/profile.css";
+@import "./screens/fichas.css";
+@import "./screens/inventario.css";
+@import "./screens/chibis.css";
+@import "./screens/banco.css";
+@import "./screens/categorias.css";
+@import "./screens/passe.css";
+@import "./screens/loja.css";
+@import "./screens/rng.css";
+@import "./screens/admin.css";

@@ -1,0 +1,6 @@
+/* Auth Screens Styles */
+/* Covers: login, register, forgot-password, reset-password, verify-email, confirm-password */
+
+@layer components {
+    /* Custom auth-specific styles here */
+}
