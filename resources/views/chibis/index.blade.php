@@ -5,36 +5,6 @@
         </h2>
     </x-slot>
 
-    <style>
-        body, .min-h-screen, main { background-color: #030303 !important; }
-        .header-title { color: #a855f7 !important; text-transform: uppercase; letter-spacing: 2px; text-shadow: 0 0 10px rgba(147, 51, 234, 0.5); font-weight: 900 !important; }
-
-        /* Cores das Raridades */
-        .raridade-Comum { color: #9ca3af; text-shadow: 0 0 5px rgba(156, 163, 175, 0.5); }
-        .raridade-Incomum { color: #10b981; text-shadow: 0 0 5px rgba(16, 185, 129, 0.5); }
-        .raridade-Raro { color: #3b82f6; text-shadow: 0 0 5px rgba(59, 130, 246, 0.5); }
-        .raridade-Épico { color: #8b5cf6; text-shadow: 0 0 5px rgba(139, 92, 246, 0.5); }
-        .raridade-Lendário { color: #f59e0b; text-shadow: 0 0 5px rgba(245, 158, 11, 0.5); }
-        .raridade-Mítico { color: #ef4444; text-shadow: 0 0 10px rgba(239, 68, 68, 0.8); font-weight: 900; }
-        .raridade-Secreto { color: #f472b6; text-shadow: 0 0 15px rgba(244, 114, 182, 0.9); font-weight: 900; letter-spacing: 2px; }
-
-        /* Caixas Base */
-        .dark-box { background-color: #09090b; border: 1px solid rgba(147, 51, 234, 0.4); box-shadow: 0 0 20px rgba(147, 51, 234, 0.15); border-radius: 1rem; padding: 2rem; color: #e5e7eb; position: relative; }
-        .dark-box::before { content: ''; position: absolute; top: 0; left: 0; width: 100%; height: 3px; background: linear-gradient(90deg, #6d28d9, #db2777); border-top-left-radius: 1rem; border-top-right-radius: 1rem; }
-
-        /* Botões */
-        .btn-comprar { background: linear-gradient(90deg, #059669, #10b981); color: white; font-weight: bold; padding: 10px 20px; border-radius: 0.5rem; transition: 0.3s; }
-        .btn-comprar:hover { box-shadow: 0 0 15px rgba(16, 185, 129, 0.6); transform: scale(1.05); }
-        .btn-girar { background: linear-gradient(90deg, #6d28d9, #db2777); color: white; font-weight: 900; font-size: 1.5rem; padding: 15px 40px; border-radius: 50px; transition: 0.3s; border: none; cursor: pointer; text-transform: uppercase; }
-        .btn-girar:hover:not(:disabled) { box-shadow: 0 0 20px rgba(219, 39, 119, 0.8); transform: scale(1.05); }
-        .btn-girar:disabled { opacity: 0.5; cursor: not-allowed; }
-
-        /* Área do Sorteio Animado */
-        #gacha-resultado { display: none; margin-top: 2rem; padding: 2rem; border-radius: 1rem; background: #000; border: 2px solid #333; text-align: center; animation: brilho 2s infinite alternate; }
-        @keyframes brilho { from { box-shadow: 0 0 10px #333; } to { box-shadow: 0 0 30px #db2777; } }
-        .chibi-sorteado-nome { font-size: 2.5rem; font-weight: 900; text-transform: uppercase; margin-bottom: 0.5rem; }
-    </style>
-
     <div class="py-12 max-w-7xl mx-auto sm:px-6 lg:px-8 space-y-8">
 
         @if (session('sucesso'))
@@ -224,70 +194,6 @@
         
     @if(session('chibisSorteados10x'))
         
-        <style>
-            /* Tema da Invocação: Nebulosa Azul/Branca Cintilante */
-            .bg-nebula {
-                background: radial-gradient(circle at 50% 50%, #1e3a8a 0%, #030303 80%);
-                position: relative;
-            }
-            .bg-nebula::before {
-                content: '';
-                position: absolute;
-                inset: 0;
-                background-image: radial-gradient(white 1px, transparent 1px);
-                background-size: 50px 50px;
-                opacity: 0.15;
-                animation: starTwinkle 3s infinite alternate;
-            }
-
-            @keyframes starTwinkle {
-                0% { opacity: 0.05; transform: scale(1); }
-                100% { opacity: 0.25; transform: scale(1.05); }
-            }
-
-            /* Fundos das Cartas por Raridade */
-            .bg-card-Comum { background: linear-gradient(135deg, #374151, #111827); border-color: #9ca3af; }
-            .bg-card-Incomum { background: linear-gradient(135deg, #047857, #064e3b); border-color: #34d399; }
-            .bg-card-Raro { background: linear-gradient(135deg, #1d4ed8, #1e3a8a); border-color: #60a5fa; }
-            .bg-card-Épico { background: linear-gradient(135deg, #6d28d9, #4c1d95); border-color: #a78bfa; }
-            
-            .bg-card-Lendário { 
-                background: linear-gradient(135deg, #b45309, #78350f); 
-                border-color: #fbbf24; 
-                box-shadow: 0 0 15px rgba(251,191,36,0.5); 
-            }
-            .bg-card-Mítico { 
-                background: linear-gradient(135deg, #b91c1c, #7f1d1d); 
-                border-color: #f87171; 
-                box-shadow: 0 0 25px rgba(239,68,68,0.7); 
-            }
-            .bg-card-Secreto { 
-                background: radial-gradient(circle at top right, #ffffff, transparent 60%), linear-gradient(135deg, #0ea5e9, #0f172a); 
-                border-color: #ffffff; 
-                box-shadow: 0 0 35px rgba(255,255,255,0.9); 
-            }
-
-            /* Animação das cartas surgindo */
-            @keyframes popInGacha {
-                0% { opacity: 0; transform: scale(0.5) translateY(50px) rotate(-10deg); filter: brightness(2); }
-                60% { transform: scale(1.1) translateY(-10px) rotate(3deg); filter: brightness(1.5); }
-                100% { opacity: 1; transform: scale(1) translateY(0) rotate(0); filter: brightness(1); }
-            }
-            .animate-pop-in-gacha {
-                animation: popInGacha 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
-            }
-            
-            /* Brilho varrendo a carta (Reflexo de luz) */
-            .shine-effect {
-                position: absolute; top: 0; left: -100%; width: 50%; height: 100%;
-                background: linear-gradient(to right, rgba(255,255,255,0) 0%, rgba(255,255,255,0.3) 50%, rgba(255,255,255,0) 100%);
-                transform: skewX(-20deg); animation: shineSwipe 3s infinite;
-            }
-            @keyframes shineSwipe {
-                0% { left: -100%; } 20% { left: 200%; } 100% { left: 200%; }
-            }
-        </style>
-
         <div id="telaAnimacao10x" class="fixed inset-0 z-[60] flex flex-col items-center justify-center bg-nebula overflow-hidden">
             
             <div class="relative w-40 h-40 mb-8 flex justify-center items-center">
